@@ -56,7 +56,7 @@ class SetupWindow(QWidget):
             background-color: #424242;
             color: #F5F5F5;
             selection-background-color: #64B5F6;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Arial', sans-serif;
         """)
         self.resize(500, 300)
 
