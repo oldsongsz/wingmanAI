@@ -155,7 +155,7 @@ class SetupWindow(QWidget):
 
         if files is None:
             self.nofiles_label.setText("No files found!")
-            self.nofiles_label.setFont(QFont("Roboto", 16))
+            self.nofiles_label.setFont(QFont("Arial", 16))
             return None
         else:
             self.file_dropdown.addItems(files)
@@ -203,7 +203,7 @@ class ChatApp(QWidget):
         transcript_tab = QWidget()
 
         self.transcript_box = QTextEdit()
-        self.transcript_box.setFont(QFont("Roboto", 10))
+        self.transcript_box.setFont(QFont("Arial", 10))
         self.transcript_box.setReadOnly(True)
 
         self.recording_label = QLabel()
@@ -214,7 +214,7 @@ class ChatApp(QWidget):
         self.recording_timer.start(1000)
 
         self.save_quit_button = QPushButton("Save and quit")
-        self.save_quit_button.setFont(QFont("Roboto", 12))
+        self.save_quit_button.setFont(QFont("Arial", 12))
         self.save_quit_button.setStyleSheet("""
             QPushButton {
                 font-size: 14pt;
@@ -245,17 +245,17 @@ class ChatApp(QWidget):
 
         self.chat_history_box = QTextEdit()
         self.chat_history_box.setReadOnly(True)
-        self.chat_history_box.append("<div style='background-color:#363636  ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Roboto;font-size:16px;'><b>"
+        self.chat_history_box.append("<div style='background-color:#363636  ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Arial;font-size:16px;'><b>"
                                      + "Wingman: " + "</b>" + "Hello! I'm Wingman, your personal conversation assistant. I am now monitoring your conversation. How can I help you?" + "</div>")
 
         self.input_box = CustomLineEdit("Send a message...")
-        self.input_box.setFont(QFont("Robotica", 12))
+        self.input_box.setFont(QFont("Arial", 12))
         self.input_box.setStyleSheet("color: darkgray;")
         self.input_box.setMinimumSize(400, 40)
 
 
         self.send_button = QPushButton("Send message")
-        self.send_button.setFont(QFont("Robotica", 12))
+        self.send_button.setFont(QFont("Arial", 12))
         self.send_button.setStyleSheet("""
             QPushButton {
                 font-size: 14pt;
@@ -311,7 +311,7 @@ class ChatApp(QWidget):
         if user_message:
             self.input_box.clear()
             self.chat_history_box.append(
-                "<div style='background-color:#363636   ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Roboto;font-size:16px;'><b>" + "You: " + "</b>" + user_message + "</div>")
+                "<div style='background-color:#363636   ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Arial;font-size:16px;'><b>" + "You: " + "</b>" + user_message + "</div>")
             self.chat_history_box.moveCursor(QTextCursor.End)
 
             self.placeholder_text = "."
@@ -339,7 +339,7 @@ class ChatApp(QWidget):
         self.response_timer.stop()
         self.response_label.clear()
         QApplication.processEvents()
-        self.chat_history_box.append("<div style='background-color:#363636  ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Roboto;font-size:16px;'><b>" + "Wingman: " + "</b>" + response + "</div>")
+        self.chat_history_box.append("<div style='background-color:#363636  ;padding:10px;margin:5px;border-radius:15px;color:#FFFFFF;font-family:Arial;font-size:16px;'><b>" + "Wingman: " + "</b>" + response + "</div>")
         self.chat_history_box.update()
         self.chat_history_box.moveCursor(QTextCursor.End)
 
