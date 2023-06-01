@@ -10,6 +10,7 @@ from datetime import timedelta
 #import pyaudiowpatch as pyaudio
 import pyaudio
 from heapq import merge
+import openai
 
 PHRASE_TIMEOUT = 3.05
 
@@ -19,8 +20,8 @@ class AudioTranscriber:
     def __init__(self, mic_source, speaker_source):
         self.transcript_data = {"You": [], "Speaker": []}
         self.transcript_changed_event = threading.Event()
-        self.audio_model = whisper.load_model('base.en')
-        print(f'Whisper running on device: {self.audio_model.device}')
+        #self.audio_model = whisper.load_model('base.en')
+        #print(f'Whisper running on device: {self.audio_model.device}')
         self.should_continue = True
         self.audio_sources = {
             "You": {
@@ -69,7 +70,7 @@ class AudioTranscriber:
         source_info["last_spoken"] = time_spoken 
 
     def process_mic_data(self, data):
-        temp_file = NamedTemporaryFile().name
+        temp_file = NamedTemporaryFile(suffix=".wav").name
         audio_data = sr.AudioData(data, self.audio_sources["You"]["sample_rate"], self.audio_sources["You"]["sample_width"])
         wav_data = io.BytesIO(audio_data.get_wav_data())
         with open(temp_file, 'w+b') as f:
@@ -77,7 +78,7 @@ class AudioTranscriber:
         return temp_file
 
     def process_speaker_data(self, data):
-        temp_file = NamedTemporaryFile().name
+        temp_file = NamedTemporaryFile(suffix=".wav").name
         with wave.open(temp_file, 'wb') as wf:
             wf.setnchannels(self.audio_sources["Speaker"]["channels"])
             p = pyaudio.PyAudio()
@@ -87,7 +88,14 @@ class AudioTranscriber:
         return temp_file
 
     def get_transcription(self, file_path):
-        result = self.audio_model.transcribe(file_path, fp16=torch.cuda.is_available())
+        #result = self.audio_model.transcribe(file_path, fp16=torch.cuda.is_available())
+        #return result['text'].strip()
+        try:
+            with open(file_path, "rb") as audio_file:
+                result = openai.Audio.translate("whisper-1", audio_file)
+        except Exception as e:
+            print(e)
+            return ''
         return result['text'].strip()
 
     def update_transcript(self, who_spoke, text, time_spoken):
